@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { auth, provider } from '../../firebase';
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider} from "firebase/auth"
 
-const Login = ({ DirectToSignUp }) => {
+const Login = ({ DirectToSignUp, CreateUser }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -25,6 +25,8 @@ const Login = ({ DirectToSignUp }) => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
         console.log('Google login success:', result.user);
+        const uid =result.user.uid;
+        CreateUser(uid);
       })
       .catch((error) => {
         console.error('Google login error:', error);

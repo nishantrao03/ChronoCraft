@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { auth, provider } from '../../firebase';
-import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
+import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import axios from 'axios';
 
-const Signup = ({ DirectToLogin }) => {
+const Signup = ({ DirectToLogin, CreateUser }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -14,6 +15,8 @@ const Signup = ({ DirectToLogin }) => {
     createUserWithEmailAndPassword(auth,email,password)
     .then((userCredential) => {
         console.log(userCredential);
+        const uid = userCredential.user.uid;
+        CreateUser(uid);
     }).catch((error) => {
         console.log(error);
     })
@@ -24,6 +27,8 @@ const Signup = ({ DirectToLogin }) => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
         console.log('Google login success:', result.user);
+        const uid =result.user.uid;
+        CreateUser(uid);
       })
       .catch((error) => {
         console.error('Google login error:', error);
