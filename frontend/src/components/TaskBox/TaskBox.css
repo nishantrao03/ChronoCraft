@@ -8,7 +8,7 @@
     border-radius: 5px;
     padding: 10px;
     margin: 10px;
-    width: 300px;
+    width: 300px; /* Set a fixed width for the box */
     height: 200px; /* Set a fixed height for the box */
     overflow: hidden; /* Hide overflowing content */
   }
@@ -16,6 +16,9 @@
   .title {
     font-size: 18px;
     font-weight: bold;
+    height: 20%; /* Set height relative to task box */
+    overflow: hidden; /* Hide overflowing content */
+    text-overflow: ellipsis; /* Display ellipsis for overflow */
   }
   
   .deadline {
@@ -25,11 +28,9 @@
   }
   
   .description {
-    margin-top: 10px;
-    height: 80px; /* Set a specific height for the description */
+    height: 40%; /* Set max height relative to task box */
     overflow: hidden; /* Hide overflowing content */
-    text-overflow: ellipsis; /* Display ellipsis (...) for overflow */
-    white-space: nowrap; /* Prevent text from wrapping */
+    text-overflow: ellipsis; /* Display ellipsis for overflow */
   }
   
   .action-buttons {

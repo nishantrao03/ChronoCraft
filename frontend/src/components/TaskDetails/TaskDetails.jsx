@@ -12,12 +12,39 @@ function TaskDetails({ show, onClose, task }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTask, setEditedTask] = useState({ ...task });
 
+  const onUpdate = (editedTask) => {
+    // Send PUT request to backend API endpoint with updated task data
+    fetch(`http://localhost:5000/api/tasks/${editedTask._id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(editedTask),
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to update task');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Task updated successfully:', data.task);
+      })
+      .catch(error => {
+        console.error('Error updating task:', error);
+        // Handle error
+      });
+  };
+  
+
   const handleEdit = () => {
     setIsEditing(true);
   };
 
   const handleSave = () => {
     // Handle save logic, e.g., send editedTask to backend
+    console.log(editedTask);
+    onUpdate(editedTask);
     setIsEditing(false);
     // Call a function to save changes to the task
   };
@@ -65,7 +92,7 @@ function TaskDetails({ show, onClose, task }) {
                     type="date"
                     className="form-control"
                     name="deadline"
-                    value={formatDate(editedTask.deadline)}
+                    value={editedTask.deadline}
                     onChange={handleChange}
                     required
                   />
